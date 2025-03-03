@@ -42,6 +42,7 @@ let isPaused;
 let highScore;
 let isSoundEnabled = true;
 let isBackgroundMusicPlaying = false;
+let isGameStarted = false;
 
 // Sound elements
 const rotateSound = document.getElementById('rotate-sound');
@@ -83,6 +84,46 @@ function init() {
     // Start game loop
     lastTime = 0;
     requestAnimationFrame(update);
+    
+    // Show main menu
+    document.getElementById('main-menu').style.display = 'flex';
+    
+    // Setup menu controls
+    setupMenuControls();
+}
+
+// Setup menu controls
+function setupMenuControls() {
+    // Play button
+    document.getElementById('play-btn').addEventListener('click', () => {
+        document.getElementById('main-menu').style.display = 'none';
+        isGameStarted = true;
+        isPaused = false;
+        if (isSoundEnabled && !isBackgroundMusicPlaying) {
+            backgroundMusic.play();
+            isBackgroundMusicPlaying = true;
+        }
+    });
+    
+    // Menu sound button
+    document.getElementById('sound-btn-menu').addEventListener('click', () => {
+        const soundBtn = document.getElementById('sound-btn-menu');
+        isSoundEnabled = !isSoundEnabled;
+        soundBtn.innerHTML = isSoundEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+        document.getElementById('sound-btn').innerHTML = isSoundEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+        if (!isSoundEnabled) {
+            backgroundMusic.pause();
+            isBackgroundMusicPlaying = false;
+        }
+    });
+    
+    // Menu theme switch
+    document.getElementById('theme-switch-menu').addEventListener('change', () => {
+        const menuThemeSwitch = document.getElementById('theme-switch-menu');
+        const gameThemeSwitch = document.getElementById('theme-switch');
+        gameThemeSwitch.checked = menuThemeSwitch.checked;
+        document.body.setAttribute('data-theme', menuThemeSwitch.checked ? 'dark' : 'light');
+    });
 }
 
 // Create empty game board
@@ -297,7 +338,7 @@ const FRAME_TIME = 1000 / FPS;
 
 // Game loop
 function update(time = 0) {
-    if (!gameOver && !isPaused) {
+    if (!gameOver && !isPaused && isGameStarted) {
         const deltaTime = time - lastTime;
         dropCounter = (dropCounter || 0) + deltaTime;
 
@@ -359,6 +400,7 @@ document.getElementById('start-btn').addEventListener('click', () => {
         gameOver = false;
         document.getElementById('game-over').style.display = 'none';
     }
+    isGameStarted = true;
     isPaused = false;
     if (isSoundEnabled && !isBackgroundMusicPlaying) {
         backgroundMusic.play();
