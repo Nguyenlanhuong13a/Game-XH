@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trò Chơi Xếp Hình</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <h1>XẾP HÌNH</h1>
+            <div class="theme-toggle">
+                <input type="checkbox" id="theme-switch" class="theme-switch">
+                <label for="theme-switch" class="theme-slider">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </label>
+            </div>
+        </div>
+
+        <div class="game-container">
+            <div class="game-board">
+                <canvas id="tetris" width="300" height="600"></canvas>
+            </div>
+
+            <div class="game-info">
+                <div class="score-container">
+                    <div class="info-box">
+                        <h3>Điểm Số</h3>
+                        <p id="score">0</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>Hàng</h3>
+                        <p id="lines">0</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>Cấp Độ</h3>
+                        <p id="level">1</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>Điểm Cao</h3>
+                        <p id="highscore">0</p>
+                    </div>
+                </div>
+
+                <div class="next-piece-container">
+                    <h3>Khối Tiếp Theo</h3>
+                    <canvas id="nextPiece" width="100" height="100"></canvas>
+                </div>
+
+                <div class="controls">
+                    <button id="start-btn" class="btn">Bắt Đầu</button>
+                    <button id="pause-btn" class="btn">Tạm Dừng</button>
+                    <button id="sound-btn" class="btn"><i class="fas fa-volume-up"></i></button>
+                </div>
+
+                <div class="instructions">
+                    <h3>Điều Khiển</h3>
+                    <p><i class="fas fa-arrow-left"></i> Di Chuyển Trái</p>
+                    <p><i class="fas fa-arrow-right"></i> Di Chuyển Phải</p>
+                    <p><i class="fas fa-arrow-down"></i> Di Chuyển Xuống</p>
+                    <p><i class="fas fa-arrow-up"></i> Xoay</p>
+                    <p><i class="fas fa-space"></i> Thả Nhanh</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-over" class="modal">
+        <div class="modal-content">
+            <h2>Trò Chơi Kết Thúc!</h2>
+            <p>Điểm của bạn: <span id="final-score">0</span></p>
+            <button id="restart-btn" class="btn">Chơi Lại</button>
+        </div>
+    </div>
+
+    <audio id="rotate-sound" src="sounds/rotate.mp3" preload="auto"></audio>
+    <audio id="drop-sound" src="sounds/drop.mp3" preload="auto"></audio>
+    <audio id="clear-sound" src="sounds/clear.mp3" preload="auto"></audio>
+    <audio id="gameover-sound" src="sounds/gameover.mp3" preload="auto"></audio>
+    <audio id="background-music" src="sounds/background.mp3" preload="auto" loop></audio>
+
+    <script src="tetris.js"></script>
+</body>
+</html>
